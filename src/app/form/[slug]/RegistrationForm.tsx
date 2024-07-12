@@ -19,27 +19,9 @@ import { useRouter } from 'next/navigation';
 import RegisterModel, {
   Genders,
   MaritalStatuses,
+  Relationships,
+  Religions,
 } from '@/app/models/RegisterModel';
-
-const Religions = [
-  'Christian',
-  'Muslim',
-  'Hindu',
-  'Buddhist',
-  'Other',
-] as const;
-type Religion = (typeof Religions)[number];
-
-const Relationships = [
-  'Father',
-  'Mother',
-  'Brother',
-  'Sister',
-  'Spouse',
-  'Child',
-  'Other',
-] as const;
-type Relationship = (typeof Relationships)[number];
 
 export default function RegistrationForm() {
   const {
