@@ -15,6 +15,11 @@ import {
 import { Button } from '@/components/ui/button';
 import { IconReload } from '@tabler/icons-react';
 import { saveRegister } from '../service';
+import { useRouter } from 'next/navigation';
+import RegisterModel, {
+  Genders,
+  MaritalStatuses,
+} from '@/app/models/RegisterModel';
 
 const Religions = [
   'Christian',
@@ -36,39 +41,6 @@ const Relationships = [
 ] as const;
 type Relationship = (typeof Relationships)[number];
 
-const Genders = ['Male', 'Female', 'Other'] as const;
-type Gender = (typeof Genders)[number];
-
-const MaritalStatuses = [
-  'Single',
-  'Married',
-  'Divorced',
-  'Widowed',
-  'Other',
-] as const;
-type MaritalStatus = (typeof MaritalStatuses)[number];
-
-interface RegisterModel {
-  nationalId: string;
-  names: string;
-  email: string;
-  confirmEmail: string;
-  phone1: string;
-  phone2?: string;
-  religion: Religion;
-  dateOfBirth: Date;
-  gender: Gender;
-  maritalStatus: MaritalStatus;
-  birthPlace: string;
-  homeTown: string;
-  heighSchool: string;
-  nextOfKin: {
-    names: string;
-    phone: string;
-    relationship: Relationship;
-  };
-}
-
 export default function RegistrationForm() {
   const {
     register,
@@ -77,6 +49,7 @@ export default function RegistrationForm() {
     formState: { errors, isSubmitting },
   } = useForm<RegisterModel>();
 
+  const router = useRouter();
   const onSubmit: SubmitHandler<RegisterModel> = async (data) => {
     await saveRegister(data);
   };

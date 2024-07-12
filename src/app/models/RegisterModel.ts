@@ -12,6 +12,18 @@ export const Relationships = [
 ];
 export type Relationship = (typeof Relationships)[number];
 
+export const Genders = ['Male', 'Female', 'Other'] as const;
+export type Gender = (typeof Genders)[number];
+
+export const MaritalStatuses = [
+  'Single',
+  'Married',
+  'Divorced',
+  'Widowed',
+  'Other',
+] as const;
+export type MaritalStatus = (typeof MaritalStatuses)[number];
+
 export default interface RegisterModel {
   nationalId: string;
   names: string;
@@ -21,8 +33,8 @@ export default interface RegisterModel {
   phone2?: string;
   religion: string;
   dateOfBirth: Date;
-  gender: 'Male' | 'Female' | 'Other';
-  maritalStatus: 'Single' | 'Married' | 'Divorced' | 'Widowed' | 'Other';
+  gender: Gender;
+  maritalStatus: MaritalStatus;
   birthPlace: string;
   homeTown: string;
   heighSchool: string; // Name of high school
