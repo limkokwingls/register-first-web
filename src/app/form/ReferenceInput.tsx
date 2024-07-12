@@ -94,7 +94,9 @@ const ReferenceNumberInput = () => {
   return (
     <Card className='w-full max-w-[600px] mx-auto mb-6'>
       <CardHeader>
-        <CardTitle className='text-lg font-normal'>Reference Number</CardTitle>
+        <CardTitle className='text-base font-normal'>
+          Reference Number
+        </CardTitle>
       </CardHeader>
       <CardContent>
         <Alert className='mb-4'>

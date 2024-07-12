@@ -3,7 +3,7 @@ import ReferenceNumberInput from './form/ReferenceInput';
 export default function Home() {
   return (
     <main>
-      <header className='flex flex-col gap-1 items-center text-center'>
+      <header className='flex flex-col gap-1 items-center text-center mt-5'>
         <h1 className='text-3xl sm:text-5xl font-extralight'>
           Registration Form
         </h1>
@@ -11,7 +11,7 @@ export default function Home() {
           Registration form for first year students
         </p>
       </header>
-      <div className='mt-10'>
+      <div className='mt-5'>
         <ReferenceNumberInput />
       </div>
     </main>

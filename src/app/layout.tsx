@@ -27,7 +27,7 @@ export default function RootLayout({
             height={125}
           />
         </Link>
-        <div className='mt-10 p-2'>{children}</div>
+        <div className='p-2'>{children}</div>
       </body>
     </html>
   );
