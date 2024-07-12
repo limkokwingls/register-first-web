@@ -1,10 +1,16 @@
 import React from 'react';
 import RegistrationForm from './RegistrationForm';
 
-export default function FormPage() {
+type Props = {
+  params: {
+    slug: string;
+  };
+};
+
+export default function FormPage({ params: { slug } }: Props) {
   return (
     <main className='py-10'>
-      <RegistrationForm />
+      <RegistrationForm reference={slug} />
     </main>
   );
 }

@@ -23,7 +23,11 @@ import RegisterModel, {
   Religions,
 } from '@/app/models/RegisterModel';
 
-export default function RegistrationForm() {
+type Props = {
+  reference: string;
+};
+
+export default function RegistrationForm({ reference }: Props) {
   const {
     register,
     control,
@@ -31,9 +35,8 @@ export default function RegistrationForm() {
     formState: { errors, isSubmitting },
   } = useForm<RegisterModel>();
 
-  const router = useRouter();
   const onSubmit: SubmitHandler<RegisterModel> = async (data) => {
-    await saveRegister(data);
+    await saveRegister(reference, data);
   };
 
   return (
