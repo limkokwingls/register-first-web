@@ -124,7 +124,7 @@ const ReferenceNumberInput = () => {
                   ref={inputRefs[index]}
                   value={refParts[index]}
                   onChange={(e) => handleInputChange(index, e.target.value)}
-                  className='w-20 text-center'
+                  className='w-14 sm:w-20 text-center p-0'
                   maxLength={5}
                   placeholder='XXXX'
                 />
@@ -133,7 +133,11 @@ const ReferenceNumberInput = () => {
             ))}
           </div>
 
-          {error && <div className='text-red-600 text-sm mt-2'>{error}</div>}
+          {error && (
+            <div className='text-red-600 text-sm mt-2'>
+              Invalid Reference Number
+            </div>
+          )}
 
           <Button
             onClick={handleSubmit}
