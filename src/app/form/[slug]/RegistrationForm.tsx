@@ -14,7 +14,7 @@ import {
 } from '@/components/ui/select';
 import { Button } from '@/components/ui/button';
 import { IconReload } from '@tabler/icons-react';
-import { saveRegister } from './service';
+import { saveRegister } from '../service';
 
 const Religions = [
   'Christian',
