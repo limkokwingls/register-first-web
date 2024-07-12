@@ -1,7 +1,8 @@
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import './globals.css';
-import { ThemeProvider } from './providers';
+import Link from 'next/link';
+import Image from 'next/image';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -17,7 +18,17 @@ export default function RootLayout({
 }>) {
   return (
     <html lang='en'>
-      <body className={inter.className}>{children}</body>
+      <body className={inter.className}>
+        <div className='flex justify-center'>
+          <Image
+            alt='Logo'
+            src='/transparent-logo.png'
+            width={280}
+            height={125}
+          />
+        </div>
+        <div className='mt-10'>{children}</div>
+      </body>
     </html>
   );
 }

@@ -88,12 +88,13 @@ const ReferenceNumberInput = () => {
 
   useEffect(() => {
     inputRefs[1].current?.focus();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
     <Card className='w-full max-w-[600px] mx-auto mb-6'>
       <CardHeader>
-        <CardTitle className='text-xl'>Enter Your Reference Number</CardTitle>
+        <CardTitle className='text-lg font-normal'>Reference Number</CardTitle>
       </CardHeader>
       <CardContent>
         <Alert className='mb-4'>
@@ -109,7 +110,7 @@ const ReferenceNumberInput = () => {
         </Alert>
 
         <div className='space-y-4'>
-          <Label htmlFor='refNumber'>Reference Number</Label>
+          <Label htmlFor='refNumber'>Enter Your Reference Number</Label>
           <div className='flex items-center space-x-1'>
             <Input
               value={refParts[0]}
@@ -139,7 +140,7 @@ const ReferenceNumberInput = () => {
             className='w-full mt-4'
             disabled={refParts.some((part) => part.length === 0)}
           >
-            Submit Reference Number
+            Submit
           </Button>
 
           {isValid && (
