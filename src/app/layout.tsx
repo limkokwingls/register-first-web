@@ -19,14 +19,14 @@ export default function RootLayout({
   return (
     <html lang='en'>
       <body className={inter.className}>
-        <div className='flex justify-center'>
+        <Link className='flex justify-center' href={'/'}>
           <Image
             alt='Logo'
             src='/transparent-logo.png'
             width={280}
             height={125}
           />
-        </div>
+        </Link>
         <div className='mt-10'>{children}</div>
       </body>
     </html>
