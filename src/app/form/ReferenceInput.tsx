@@ -87,14 +87,13 @@ const ReferenceNumberInput = () => {
   };
 
   useEffect(() => {
-    // Focus the second input on component mount
     inputRefs[1].current?.focus();
   }, []);
 
   return (
     <Card className='w-full max-w-[600px] mx-auto mb-6'>
       <CardHeader>
-        <CardTitle>Enter Your Reference Number</CardTitle>
+        <CardTitle className='text-xl'>Enter Your Reference Number</CardTitle>
       </CardHeader>
       <CardContent>
         <Alert className='mb-4'>
@@ -126,7 +125,7 @@ const ReferenceNumberInput = () => {
                   onChange={(e) => handleInputChange(index, e.target.value)}
                   className='w-20 text-center'
                   maxLength={5}
-                  placeholder='XXXXX'
+                  placeholder='XXXX'
                 />
                 {arrayIndex < 2 && <span className='text-xl font-bold'>/</span>}
               </React.Fragment>
