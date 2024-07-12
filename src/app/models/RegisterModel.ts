@@ -1,3 +1,5 @@
+import { Program } from './programs';
+
 export const Religions = ['Christian', 'Muslim', 'Hindu', 'Buddhist', 'Other'];
 export type Religion = (typeof Religions)[number];
 
@@ -38,7 +40,8 @@ export default interface RegisterModel {
   maritalStatus: MaritalStatus;
   birthPlace: string;
   homeTown: string;
-  heighSchool: string; // Name of high school
+  heighSchool: string;
+  program: Program;
   nextOfKin: {
     names: string;
     phone: string;

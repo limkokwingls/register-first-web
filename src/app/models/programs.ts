@@ -1,4 +1,4 @@
-interface Program {
+export interface Program {
   name: string;
   code: string;
   facultyCode: string;
@@ -77,5 +77,9 @@ const programs: Program[] = [
     facultyCode: 'FICT',
   },
 ];
+
+export function getProgramByCode(code: string): Program | undefined {
+  return programs.find((program) => program.code === code);
+}
 
 export default programs;
