@@ -127,7 +127,7 @@ const ReferenceNumberInput = () => {
                   value={refParts[index]}
                   onChange={(e) => handleInputChange(index, e.target.value)}
                   className='w-14 sm:w-20 text-center p-0'
-                  maxLength={5}
+                  maxLength={6}
                   placeholder='XXXX'
                 />
                 {arrayIndex < 2 && <span className='text-xl font-bold'>/</span>}
