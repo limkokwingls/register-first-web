@@ -62,7 +62,7 @@ export default function StudentPicker({ reference, obj }: Props) {
         </CardContent>
         <CardFooter className='flex justify-end gap-4 sm:gap-10 mt-5'>
           <Button variant='destructive' onClick={() => setAgree('no')}>
-            No, This is Not Me
+            <span className='hidden sm:block'>No, This is </span>Not Me
           </Button>
           <Button onClick={() => setAgree('yes')}>Yes, This is Me</Button>
         </CardFooter>
