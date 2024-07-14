@@ -41,7 +41,7 @@ export default function RegistrationForm({ reference, obj }: Props) {
 
   const onSubmit: SubmitHandler<StudentInfo> = async (data) => {
     await saveRegister(reference, data);
-    router.push('/success');
+    router.replace('/success');
   };
 
   return (
