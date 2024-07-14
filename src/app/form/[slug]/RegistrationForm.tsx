@@ -37,9 +37,11 @@ export default function RegistrationForm({ reference, obj }: Props) {
   } = useForm<RegisterModel>({
     defaultValues: obj || {},
   });
+  const router = useRouter();
 
   const onSubmit: SubmitHandler<RegisterModel> = async (data) => {
     await saveRegister(reference, data);
+    router.push('/success');
   };
 
   return (
