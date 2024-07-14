@@ -60,7 +60,7 @@ export default function StudentPicker({ reference, obj }: Props) {
             </div>
           </form>
         </CardContent>
-        <CardFooter className='flex justify-end gap-10 mt-5'>
+        <CardFooter className='flex justify-end gap-4 sm:gap-10 mt-5'>
           <Button variant='destructive' onClick={() => setAgree('no')}>
             No, This is Not Me
           </Button>
