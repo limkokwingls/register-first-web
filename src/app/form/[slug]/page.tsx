@@ -22,7 +22,7 @@ export default async function FormPage({ params: { slug } }: Props) {
 
   return (
     <main className='py-10'>
-      {obj ? (
+      {res ? (
         <StudentPicker reference={slug} obj={obj} />
       ) : (
         <RegistrationForm reference={slug} />
