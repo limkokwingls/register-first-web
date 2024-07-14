@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useForm, SubmitHandler, Controller } from 'react-hook-form';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -25,15 +25,18 @@ import RegisterModel, {
 
 type Props = {
   reference: string;
+  obj?: RegisterModel;
 };
 
-export default function RegistrationForm({ reference }: Props) {
+export default function RegistrationForm({ reference, obj }: Props) {
   const {
     register,
     control,
     handleSubmit,
     formState: { errors, isSubmitting },
-  } = useForm<RegisterModel>();
+  } = useForm<RegisterModel>({
+    defaultValues: obj || {},
+  });
 
   const onSubmit: SubmitHandler<RegisterModel> = async (data) => {
     await saveRegister(reference, data);
