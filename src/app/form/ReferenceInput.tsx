@@ -141,13 +141,14 @@ const ReferenceNumberInput = () => {
                   value={refParts[index]}
                   onChange={(e) => handleInputChange(index, e.target.value)}
                   className={cn(
-                    'w-14 sm:w-20 text-center p-0',
-                    index === 3 && 'w-8'
+                    'w-12 sm:w-20 text-center p-0',
+                    index === 3 && 'w-8 sm:w-12',
+                    index === 4 && 'w-8 sm:w-12'
                   )}
                   maxLength={index === 3 ? 1 : 6}
-                  placeholder={index === 3 ? 'X' : 'XXXX'}
+                  placeholder={index === 3 ? 'X' : 'XXX'}
                 />
-                {arrayIndex < 2 && <span className='text-xl font-bold'>/</span>}
+                {arrayIndex < 3 && <span className='text-xl font-bold'>/</span>}
               </React.Fragment>
             ))}
           </div>
