@@ -3,6 +3,7 @@ import RegistrationForm from './RegistrationForm';
 import { getRegistration } from '../service';
 import { Timestamp } from 'firebase/firestore';
 import RegisterModel from '@/app/models/RegisterModel';
+import StudentPicker from './StudentPicker';
 
 type Props = {
   params: {
@@ -21,7 +22,11 @@ export default async function FormPage({ params: { slug } }: Props) {
 
   return (
     <main className='py-10'>
-      <RegistrationForm reference={slug} obj={obj} />
+      {obj ? (
+        <StudentPicker reference={slug} obj={obj} />
+      ) : (
+        <RegistrationForm reference={slug} />
+      )}
     </main>
   );
 }
