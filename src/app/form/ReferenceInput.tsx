@@ -38,13 +38,13 @@ const ReferenceNumberInput = () => {
     const [, faculty, program, admissionCode, number] = refParts;
     const lastPartRegex = /^[awp0-9]{1,5}$/i;
 
-    if (!Object.keys(facultyPrograms).includes(faculty)) {
+    if (!Object.keys(facultyPrograms).includes(faculty.toUpperCase())) {
       setError('Invalid faculty code. Please check and try again.');
       setIsValid(false);
       return false;
     }
 
-    if (!facultyPrograms[faculty].includes(program)) {
+    if (!facultyPrograms[faculty].includes(program.toUpperCase())) {
       setError(
         'Invalid program code for the selected faculty. Please check and try again.'
       );
