@@ -26,7 +26,7 @@ export const MaritalStatuses = [
 ] as const;
 export type MaritalStatus = (typeof MaritalStatuses)[number];
 
-export default interface RegisterModel {
+export default interface StudentInfo {
   id?: string;
   reference: string;
   nationalId: string;

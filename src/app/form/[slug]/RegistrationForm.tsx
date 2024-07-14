@@ -16,16 +16,16 @@ import { Button } from '@/components/ui/button';
 import { IconReload } from '@tabler/icons-react';
 import { saveRegister } from '../service';
 import { useRouter } from 'next/navigation';
-import RegisterModel, {
+import StudentInfo, {
   Genders,
   MaritalStatuses,
   Relationships,
   Religions,
-} from '@/app/models/RegisterModel';
+} from '@/app/models/StudentInfo';
 
 type Props = {
   reference: string;
-  obj?: RegisterModel;
+  obj?: StudentInfo;
 };
 
 export default function RegistrationForm({ reference, obj }: Props) {
@@ -34,12 +34,12 @@ export default function RegistrationForm({ reference, obj }: Props) {
     control,
     handleSubmit,
     formState: { errors, isSubmitting },
-  } = useForm<RegisterModel>({
+  } = useForm<StudentInfo>({
     defaultValues: obj || {},
   });
   const router = useRouter();
 
-  const onSubmit: SubmitHandler<RegisterModel> = async (data) => {
+  const onSubmit: SubmitHandler<StudentInfo> = async (data) => {
     await saveRegister(reference, data);
     router.push('/success');
   };

@@ -9,17 +9,17 @@ import {
   limit,
   updateDoc,
 } from 'firebase/firestore';
-import RegisterModel from '../models/RegisterModel';
+import StudentInfo from '../models/StudentInfo';
 import { db } from '@/lib/firestore';
 import { getProgramByCode } from '../models/programs';
 
-export async function saveRegister(reference: string, data: RegisterModel) {
+export async function saveRegister(reference: string, data: StudentInfo) {
   const programCode = reference.split('-')[2].toUpperCase();
   const program = getProgramByCode(programCode);
   if (!program) {
     throw new Error('Invalid program code');
   }
-  const firestoreData: RegisterModel = {
+  const firestoreData: StudentInfo = {
     ...data,
     reference,
     program: program,
@@ -45,5 +45,5 @@ export async function getRegistration(reference: string) {
     return null;
   }
   const doc = querySnapshot.docs[0];
-  return { id: doc.id, ...doc.data() } as RegisterModel;
+  return { id: doc.id, ...doc.data() } as StudentInfo;
 }

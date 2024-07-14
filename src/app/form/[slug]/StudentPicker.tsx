@@ -1,5 +1,5 @@
 'use client';
-import RegisterModel from '@/app/models/RegisterModel';
+import StudentInfo from '@/app/models/StudentInfo';
 import { Button } from '@/components/ui/button';
 import {
   Card,
@@ -23,7 +23,7 @@ import RegistrationForm from './RegistrationForm';
 
 type Props = {
   reference: string;
-  obj?: RegisterModel;
+  obj?: StudentInfo;
 };
 
 export default function StudentPicker({ reference, obj }: Props) {

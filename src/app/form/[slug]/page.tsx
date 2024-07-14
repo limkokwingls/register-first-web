@@ -2,7 +2,7 @@ import React from 'react';
 import RegistrationForm from './RegistrationForm';
 import { getRegistration } from '../service';
 import { Timestamp } from 'firebase/firestore';
-import RegisterModel from '@/app/models/RegisterModel';
+import StudentInfo from '@/app/models/StudentInfo';
 import StudentPicker from './StudentPicker';
 
 type Props = {
@@ -12,7 +12,7 @@ type Props = {
 };
 
 export default async function FormPage({ params: { slug } }: Props) {
-  const res = (await getRegistration(slug)) as RegisterModel;
+  const res = (await getRegistration(slug)) as StudentInfo;
   const dateOfBirth = timestampToDate(res?.dateOfBirth);
 
   const obj = {
