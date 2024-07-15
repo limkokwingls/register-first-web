@@ -263,16 +263,16 @@ export default function RegistrationForm({ reference, obj }: Props) {
             </div>
 
             <div className='space-y-2'>
-              <Label htmlFor='heighSchool'>High School</Label>
+              <Label htmlFor='highSchool'>High School</Label>
               <Input
-                id='heighSchool'
-                {...register('heighSchool', {
+                id='highSchool'
+                {...register('highSchool', {
                   required: 'High school is required',
                 })}
               />
-              {errors.heighSchool && (
+              {errors.highSchool && (
                 <p className='text-red-500 text-sm'>
-                  {errors.heighSchool.message}
+                  {errors.highSchool.message}
                 </p>
               )}
             </div>

@@ -41,7 +41,7 @@ export default interface StudentInfo {
   maritalStatus: MaritalStatus;
   birthPlace: string;
   homeTown: string;
-  heighSchool: string;
+  highSchool: string;
   program: Program;
   nextOfKin: {
     names: string;
