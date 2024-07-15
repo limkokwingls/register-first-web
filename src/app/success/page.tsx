@@ -3,7 +3,7 @@ import { CircleCheckBig } from 'lucide-react';
 
 export default function SuccessPage() {
   return (
-    <main className='p-5 mt-5 sm:w-[40vw] mx-auto'>
+    <main className='p-5 mt-5 md:w-[40vw] mx-auto'>
       <Alert>
         <CircleCheckBig className='size-4' color='green' />
         <AlertTitle>Successful</AlertTitle>
