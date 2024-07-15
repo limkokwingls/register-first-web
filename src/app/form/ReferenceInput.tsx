@@ -63,10 +63,13 @@ const ReferenceNumberInput = () => {
     }
     setRefParts(newRefParts);
 
-    if (value.length > 0 && index === 3) {
+    if (index === 1 && isFaculty(value)) {
       inputRefs[index + 1].current?.focus();
     }
-    if (value.length === 5 && index < 4) {
+    if (index === 2 && isProgram(value, refParts[1])) {
+      inputRefs[index + 1].current?.focus();
+    }
+    if (index === 3 && value.length === 1) {
       inputRefs[index + 1].current?.focus();
     }
   };
@@ -76,8 +79,7 @@ const ReferenceNumberInput = () => {
     setIsValid(valid);
     if (valid) {
       const referenceNumber = refParts.join('-').toLowerCase();
-      console.log('Reference Number:', referenceNumber);
-      // router.push(`/form/${referenceNumber}`);
+      router.push(`/form/${referenceNumber}`);
     }
   };
 
@@ -155,3 +157,11 @@ const ReferenceNumberInput = () => {
 };
 
 export default ReferenceNumberInput;
+
+function isFaculty(value: string): boolean {
+  return Object.keys(facultyPrograms).includes(value.toUpperCase());
+}
+
+function isProgram(value: string, faculty: string): boolean {
+  return facultyPrograms[faculty].includes(value.toUpperCase());
+}
