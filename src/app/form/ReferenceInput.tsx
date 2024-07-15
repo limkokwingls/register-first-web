@@ -23,8 +23,7 @@ const facultyPrograms: FacultyPrograms = {
 
 const ReferenceNumberInput = () => {
   const [refParts, setRefParts] = useState<string[]>(['LUCT', '', '', '', '']);
-  const [isValid, setIsValid] = useState<boolean>(false);
-  const [error, setError] = useState<string>('');
+  const [isValid, setIsValid] = useState<boolean>(true);
   const inputRefs = [
     useRef<HTMLInputElement>(null),
     useRef<HTMLInputElement>(null),
@@ -36,66 +35,49 @@ const ReferenceNumberInput = () => {
 
   const validateReference = (): boolean => {
     const [, faculty, program, admissionCode, number] = refParts;
-    const lastPartRegex = /^[awp0-9]{1,5}$/i;
 
     if (!Object.keys(facultyPrograms).includes(faculty.toUpperCase())) {
-      setError('Invalid faculty code. Please check and try again.');
-      setIsValid(false);
       return false;
     }
-
     if (!facultyPrograms[faculty].includes(program.toUpperCase())) {
-      setError(
-        'Invalid program code for the selected faculty. Please check and try again.'
-      );
-      setIsValid(false);
       return false;
     }
-
-    if (!lastPartRegex.test(number)) {
-      setError(
-        'The last part should contain only P and/or numbers 0-9, between 1 and 5 characters.'
-      );
-      setIsValid(false);
+    if (['A', 'W', 'P'].indexOf(admissionCode.toUpperCase()) === -1) {
       return false;
     }
-
-    setIsValid(true);
-    setError('');
+    if (!/^[0-9P]+$/.test(number)) {
+      return false;
+    }
     return true;
   };
 
   const handleInputChange = (index: number, value: string): void => {
     const newRefParts = [...refParts];
     if (index === 3) {
-      // For the last part, only allow a, w, p
       newRefParts[index] = value.replace(/[^awp]/gi, '').toUpperCase();
     }
     if (index === 4) {
-      // For the last part, only allow p and/or numbers 0-9
       newRefParts[index] = value.replace(/[^p0-9]/gi, '').toUpperCase();
     } else {
       newRefParts[index] = value.toUpperCase();
     }
     setRefParts(newRefParts);
 
-    // Move to next input if current is filled with 5 characters
     if (value.length > 0 && index === 3) {
       inputRefs[index + 1].current?.focus();
     }
     if (value.length === 5 && index < 4) {
       inputRefs[index + 1].current?.focus();
     }
-
-    // Clear any previous error messages
-    setError('');
-    setIsValid(false);
   };
 
   const handleSubmit = (): void => {
-    if (validateReference()) {
+    const valid = validateReference();
+    setIsValid(valid);
+    if (valid) {
       const referenceNumber = refParts.join('-').toLowerCase();
-      router.push(`/form/${referenceNumber}`);
+      console.log('Reference Number:', referenceNumber);
+      // router.push(`/form/${referenceNumber}`);
     }
   };
 
@@ -153,7 +135,7 @@ const ReferenceNumberInput = () => {
             ))}
           </div>
 
-          {error && (
+          {!isValid && (
             <div className='text-red-600 text-sm mt-2'>
               Invalid Reference Number
             </div>
@@ -166,12 +148,6 @@ const ReferenceNumberInput = () => {
           >
             Submit
           </Button>
-
-          {isValid && (
-            <div className='text-green-600 text-sm mt-2'>
-              Valid reference number: {refParts.join('/')}
-            </div>
-          )}
         </div>
       </CardContent>
     </Card>
