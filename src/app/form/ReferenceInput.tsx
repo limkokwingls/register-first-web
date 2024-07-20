@@ -130,7 +130,7 @@ const ReferenceNumberInput = () => {
                     index === 4 && 'w-8 sm:w-12'
                   )}
                   maxLength={index === 3 ? 1 : 6}
-                  placeholder={index === 3 ? 'X' : 'XXX'}
+                  placeholder={index === 3 ? 'X' : index === 4 ? 'XX' : 'XXXX'}
                 />
                 {arrayIndex < 3 && <span className='text-xl font-bold'>/</span>}
               </React.Fragment>
