@@ -29,7 +29,7 @@ export default function StudentPicker({ reference, obj }: Props) {
   }
 
   return (
-    <div className='px-2'>
+    <div className='px-2 w-full md:w-[50vw] mx-auto'>
       <Card>
         <CardHeader>
           <CardTitle>Already Registered?</CardTitle>
@@ -54,9 +54,13 @@ export default function StudentPicker({ reference, obj }: Props) {
         </CardContent>
         <CardFooter className='flex justify-end gap-4 sm:gap-10 mt-5'>
           <Button variant='destructive' onClick={() => setAgree('no')}>
-            <span className='hidden sm:block'>No, This is </span>Not Me
+            <span className='hidden sm:block'>No, This is Not Me</span>
+            <span className='block sm:hidden'>No</span>
           </Button>
-          <Button onClick={() => setAgree('yes')}>Yes, This is Me</Button>
+          <Button onClick={() => setAgree('yes')}>
+            <span className='hidden sm:block'>Yes, This is Me</span>
+            <span className='block sm:hidden'>Yes</span>
+          </Button>
         </CardFooter>
       </Card>
     </div>
