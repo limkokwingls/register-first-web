@@ -22,6 +22,12 @@ import StudentInfo, {
   Relationships,
   Religions,
 } from '@/app/models/StudentInfo';
+import {
+  ArrowLeft,
+  ChevronLeftIcon,
+  ChevronRightIcon,
+  Link,
+} from 'lucide-react';
 
 type Props = {
   reference: string;
@@ -46,8 +52,12 @@ export default function RegistrationForm({ reference, obj }: Props) {
 
   return (
     <Card className='w-full max-w-[800px] mx-auto'>
-      <CardHeader>
-        <CardTitle>Registration Form</CardTitle>
+      <CardHeader className='flex flex-row items-center justify-between'>
+        <CardTitle className='text-lg sm:text-xl'>Registration Form</CardTitle>
+        <Button variant='secondary' onClick={() => router.back()}>
+          <ArrowLeft className='h-4 w-4 mr-2' />
+          Back
+        </Button>
       </CardHeader>
       <CardContent>
         <form onSubmit={handleSubmit(onSubmit)} className='space-y-4'>
