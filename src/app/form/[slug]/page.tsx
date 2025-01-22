@@ -14,7 +14,10 @@ type Props = {
   };
 };
 
-export default async function FormPage({ params: { slug }, searchParams }: Props) {
+export default async function FormPage({
+  params: { slug },
+  searchParams,
+}: Props) {
   const res = (await getRegistration(slug)) as StudentInfo;
   const dateOfBirth = timestampToDate(res?.dateOfBirth);
   const reference = searchParams.ref || '';
@@ -27,7 +30,7 @@ export default async function FormPage({ params: { slug }, searchParams }: Props
   return (
     <main className='py-10'>
       {res ? (
-        <StudentPicker reference={reference} obj={obj} />
+        <StudentPicker reference={reference} nationalId={slug} obj={obj} />
       ) : (
         <RegistrationForm reference={reference} nationalId={slug} />
       )}

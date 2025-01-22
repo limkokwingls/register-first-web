@@ -15,17 +15,18 @@ import RegistrationForm from './RegistrationForm';
 
 type Props = {
   reference: string;
+  nationalId: string;
   obj?: StudentInfo;
 };
 
-export default function StudentPicker({ reference, obj }: Props) {
+export default function StudentPicker({ reference, nationalId, obj }: Props) {
   const [agree, setAgree] = useState<'yes' | 'no'>();
 
   if (agree === 'yes') {
-    return <RegistrationForm reference={reference} obj={obj} />;
+    return <RegistrationForm reference={reference} nationalId={nationalId} obj={obj} />;
   }
   if (agree === 'no') {
-    return <RegistrationForm reference={reference} />;
+    return <RegistrationForm reference={reference} nationalId={nationalId} />;
   }
 
   return (
@@ -46,7 +47,11 @@ export default function StudentPicker({ reference, obj }: Props) {
                 <p>{obj?.names}</p>
               </div>
               <div className='flex flex-col space-y-1.5'>
-                <Label htmlFor='name'>Course</Label>
+                <Label htmlFor='nationalId'>National ID</Label>
+                <p>{nationalId}</p>
+              </div>
+              <div className='flex flex-col space-y-1.5'>
+                <Label htmlFor='course'>Course</Label>
                 <p>{obj?.program.name}</p>
               </div>
             </div>
