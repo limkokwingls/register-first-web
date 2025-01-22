@@ -19,7 +19,7 @@ class StudentService {
   async findByNationalId(nationalId: string) {
     return withAuth(
       async () => this.repository.findByNationalId(nationalId),
-      []
+      ['all']
     );
   }
 
@@ -28,11 +28,11 @@ class StudentService {
   }
 
   async create(data: Student) {
-    return withAuth(async () => this.repository.create(data), []);
+    return withAuth(async () => this.repository.create(data), ['all']);
   }
 
   async update(id: number, data: Student) {
-    return withAuth(async () => this.repository.update(id, data), []);
+    return withAuth(async () => this.repository.update(id, data), ['all']);
   }
 
   async delete(id: number) {
