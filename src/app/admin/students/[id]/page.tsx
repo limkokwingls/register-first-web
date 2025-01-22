@@ -45,9 +45,7 @@ export default async function StudentDetails({ params }: Props) {
         <FieldView label='Birth Place'>{student.birthPlace}</FieldView>
         <FieldView label='Home Town'>{student.homeTown}</FieldView>
         <FieldView label='High School'>{student.highSchool}</FieldView>
-        <FieldView label='Next Of Kin Names'>
-          {student.nextOfKinNames}
-        </FieldView>
+        <FieldView label='Next Of Kin Names'>{student.nextOfKinName}</FieldView>
         <FieldView label='Next Of Kin Phone'>
           {student.nextOfKinPhone}
         </FieldView>
