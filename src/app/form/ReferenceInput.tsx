@@ -18,12 +18,14 @@ const programs: Programs = {
 
 export default function ReferenceNumberInput() {
   const [refParts, setRefParts] = useState<string[]>(['TVET', '', '']);
+  const [nationalId, setNationalId] = useState<string>('');
   const [isValid, setIsValid] = useState<boolean>(true);
   const inputRefs = [
     useRef<HTMLInputElement>(null),
     useRef<HTMLInputElement>(null),
     useRef<HTMLInputElement>(null),
   ];
+  const nationalIdRef = useRef<HTMLInputElement>(null);
   const router = useRouter();
 
   const validateReference = (): boolean => {
@@ -44,6 +46,10 @@ export default function ReferenceNumberInput() {
     return true;
   };
 
+  const validateNationalId = (id: string): boolean => {
+    return id.length > 0;
+  };
+
   const handleInputChange = (index: number, value: string): void => {
     const newRefParts = [...refParts];
     newRefParts[index] = value.toUpperCase();
@@ -54,12 +60,19 @@ export default function ReferenceNumberInput() {
     }
   };
 
+  const handleNationalIdChange = (value: string): void => {
+    setNationalId(value);
+  };
+
   const handleSubmit = (): void => {
-    const valid = validateReference();
+    const refValid = validateReference();
+    const idValid = validateNationalId(nationalId);
+    const valid = refValid && idValid;
     setIsValid(valid);
+    
     if (valid) {
       const referenceNumber = refParts.join('-').toLowerCase();
-      router.push(`/form/${referenceNumber}`);
+      router.push(`/form/${nationalId}?ref=${referenceNumber}`);
     }
   };
 
@@ -71,7 +84,7 @@ export default function ReferenceNumberInput() {
     <Card className='w-full max-w-[600px] mx-auto mb-6'>
       <CardHeader>
         <CardTitle className='text-base font-normal'>
-          Reference Number
+          Student Information
         </CardTitle>
       </CardHeader>
       <CardContent>
@@ -88,42 +101,58 @@ export default function ReferenceNumberInput() {
         </Alert>
 
         <div className='space-y-4'>
-          <Label htmlFor='refNumber'>Enter Your Reference Number</Label>
-          <div className='flex items-center space-x-1'>
-            <Input
-              value={refParts[0]}
-              readOnly
-              className='w-16 text-center bg-gray-100'
-            />
-            <span className='text-xl font-bold'>/</span>
-            {[1, 2].map((index) => (
-              <React.Fragment key={index}>
-                <Input
-                  ref={inputRefs[index]}
-                  value={refParts[index]}
-                  onChange={(e) => handleInputChange(index, e.target.value)}
-                  className={cn('w-20 text-center', index === 2 && 'w-12')}
-                  maxLength={index === 1 ? 4 : 3}
-                  placeholder={index === 1 ? 'XXXX' : 'XX'}
-                />
-                {index < 2 && <span className='text-xl font-bold'>/</span>}
-              </React.Fragment>
-            ))}
+          <div>
+            <Label htmlFor='refNumber'>Reference Number</Label>
+            <div className='flex items-center space-x-1'>
+              <Input
+                value={refParts[0]}
+                readOnly
+                className='w-16 text-center bg-gray-100'
+              />
+              <span className='text-xl font-bold'>/</span>
+              {[1, 2].map((index) => (
+                <React.Fragment key={index}>
+                  <Input
+                    ref={inputRefs[index]}
+                    value={refParts[index]}
+                    onChange={(e) => handleInputChange(index, e.target.value)}
+                    className={cn(
+                      'text-center',
+                      index === 1 ? 'w-20' : 'w-16',
+                      !isValid && 'border-red-500'
+                    )}
+                  />
+                  {index === 1 && <span className='text-xl font-bold'>/</span>}
+                </React.Fragment>
+              ))}
+            </div>
           </div>
 
-          {!isValid && (
-            <div className='text-red-600 text-sm mt-2'>
-              Invalid Reference Number
-            </div>
-          )}
+          <div>
+            <Label htmlFor='nationalId'>National ID Number</Label>
+            <Input
+              ref={nationalIdRef}
+              id='nationalId'
+              value={nationalId}
+              onChange={(e) => handleNationalIdChange(e.target.value)}
+              className={cn(!isValid && !validateNationalId(nationalId) && 'border-red-500')}
+              placeholder='Enter your National ID number'
+            />
+          </div>
 
           <Button
             onClick={handleSubmit}
-            className='w-full mt-4'
-            disabled={refParts.some((part) => part.length === 0)}
+            className='w-full'
+            disabled={!validateReference() || !validateNationalId(nationalId)}
           >
-            Submit
+            Continue
           </Button>
+
+          {!isValid && (
+            <p className='text-sm text-red-500'>
+              Please enter a valid reference number and national ID
+            </p>
+          )}
         </div>
       </CardContent>
     </Card>

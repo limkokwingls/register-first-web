@@ -14,7 +14,7 @@ import { db } from '@/lib/firestore';
 import { getProgramByCode } from '../models/programs';
 
 export async function saveRegister(reference: string, data: StudentInfo) {
-  const programCode = reference.split('-')[2].toUpperCase();
+  const programCode = reference.split('-')[1].toUpperCase();
   const program = getProgramByCode(programCode);
   if (!program) {
     throw new Error('Invalid program code');
@@ -34,12 +34,21 @@ export async function saveRegister(reference: string, data: StudentInfo) {
   }
 }
 
-export async function getRegistration(reference: string) {
-  const q = query(
-    collection(db, 'registrations'),
-    where('reference', '==', reference),
-    limit(1)
-  );
+export async function getRegistration(identifier: string) {
+  let q;
+  if (identifier.length === 13) {
+    q = query(
+      collection(db, 'registrations'),
+      where('nationalId', '==', identifier),
+      limit(1)
+    );
+  } else {
+    q = query(
+      collection(db, 'registrations'),
+      where('reference', '==', identifier),
+      limit(1)
+    );
+  }
   const querySnapshot = await getDocs(q);
   if (querySnapshot.empty) {
     return null;

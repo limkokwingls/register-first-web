@@ -31,17 +31,24 @@ import {
 
 type Props = {
   reference: string;
+  nationalId: string;
   obj?: StudentInfo;
 };
 
-export default function RegistrationForm({ reference, obj }: Props) {
+export default function RegistrationForm({
+  reference,
+  nationalId,
+  obj,
+}: Props) {
   const {
     register,
     control,
     handleSubmit,
     formState: { errors, isSubmitting },
   } = useForm<StudentInfo>({
-    defaultValues: obj || {},
+    defaultValues: obj || {
+      nationalId,
+    },
   });
   const router = useRouter();
 
@@ -66,6 +73,7 @@ export default function RegistrationForm({ reference, obj }: Props) {
               <Label htmlFor='nationalId'>National ID</Label>
               <Input
                 id='nationalId'
+                readOnly
                 {...register('nationalId', {
                   required: 'National ID is required',
                 })}
