@@ -4,12 +4,19 @@ import {
   DetailsView,
   DetailsViewBody,
   DetailsViewHeader,
-  FieldView,
 } from '@/components/adease';
 import { students } from '@/db/schema';
 import { formatDate } from '@/lib/utils';
-import { deleteStudent } from '@/server/students/actions';
-import { ActionIcon, Grid, Group, Paper, Stack, Title } from '@mantine/core';
+import {
+  ActionIcon,
+  Grid,
+  Group,
+  Paper,
+  Stack,
+  Text,
+  Title,
+  Tooltip,
+} from '@mantine/core';
 import { notifications } from '@mantine/notifications';
 import { IconCopy } from '@tabler/icons-react';
 
@@ -22,145 +29,132 @@ export default function StudentView({ student }: Props) {
     <DetailsView>
       <DetailsViewHeader title={student.name} queryKey={['students']} />
       <DetailsViewBody>
-        <Stack gap='md'>
-          <Paper shadow='xs' p='md' radius='md'>
-            <Stack gap='md'>
-              <Title order={4}>Personal Information</Title>
-              <Grid>
+        <Stack>
+          <div>
+            <Title order={4} mb='xs' fw={100}>
+              Personal Information
+            </Title>
+            <Paper p='md' radius='md' withBorder>
+              <Grid gutter='xl'>
                 <Grid.Col span={{ base: 12, sm: 6 }}>
-                  <Group justify='space-between' wrap='nowrap'>
-                    <FieldView label='National Id'>
-                      {student.nationalId}
-                    </FieldView>
-                    <CopyButton text={student.nationalId} />
-                  </Group>
+                  <InfoItem
+                    label='National ID'
+                    value={student.nationalId}
+                    copyable
+                  />
                 </Grid.Col>
                 <Grid.Col span={{ base: 12, sm: 6 }}>
-                  <Group justify='space-between' wrap='nowrap'>
-                    <FieldView label='Name'>{student.name}</FieldView>
-                    <CopyButton text={student.name} />
-                  </Group>
+                  <InfoItem label='Full Name' value={student.name} copyable />
                 </Grid.Col>
                 <Grid.Col span={{ base: 12, sm: 6 }}>
-                  <Group justify='space-between' wrap='nowrap'>
-                    <FieldView label='Email'>{student.email}</FieldView>
-                    <CopyButton text={student.email} />
-                  </Group>
+                  <InfoItem
+                    label='Email Address'
+                    value={student.email}
+                    copyable
+                  />
                 </Grid.Col>
                 <Grid.Col span={{ base: 12, sm: 6 }}>
-                  <FieldView label='Date Of Birth'>
-                    {formatDate(student.dateOfBirth)}
-                  </FieldView>
+                  <InfoItem label='Date of Birth' value={student.dateOfBirth} />
                 </Grid.Col>
                 <Grid.Col span={{ base: 12, sm: 6 }}>
-                  <FieldView label='Gender'>{student.gender}</FieldView>
+                  <InfoItem label='Gender' value={student.gender} />
                 </Grid.Col>
                 <Grid.Col span={{ base: 12, sm: 6 }}>
-                  <FieldView label='Marital Status'>
-                    {student.maritalStatus}
-                  </FieldView>
+                  <InfoItem
+                    label='Marital Status'
+                    value={student.maritalStatus}
+                  />
                 </Grid.Col>
               </Grid>
-            </Stack>
-          </Paper>
+            </Paper>
+          </div>
 
-          <Paper shadow='xs' p='md' radius='md'>
-            <Stack gap='md'>
-              <Title order={4}>Contact Information</Title>
-              <Grid>
+          <div>
+            <Title order={4} mb='xs' fw={100}>
+              Contact Information
+            </Title>
+            <Paper p='md' radius='md' withBorder>
+              <Grid gutter='xl'>
                 <Grid.Col span={{ base: 12, sm: 6 }}>
-                  <Group justify='space-between' wrap='nowrap'>
-                    <FieldView label='Phone 1'>{student.phone1}</FieldView>
-                    <CopyButton text={student.phone1} />
-                  </Group>
+                  <InfoItem
+                    label='Primary Phone'
+                    value={student.phone1}
+                    copyable
+                  />
                 </Grid.Col>
                 <Grid.Col span={{ base: 12, sm: 6 }}>
-                  <Group justify='space-between' wrap='nowrap'>
-                    <FieldView label='Phone 2'>{student.phone2}</FieldView>
-                    <CopyButton text={student.phone2} />
-                  </Group>
+                  <InfoItem
+                    label='Secondary Phone'
+                    value={student.phone2}
+                    copyable
+                  />
                 </Grid.Col>
                 <Grid.Col span={{ base: 12, sm: 6 }}>
-                  <FieldView label='Birth Place'>
-                    {student.birthPlace}
-                  </FieldView>
+                  <InfoItem label='Birth Place' value={student.birthPlace} />
                 </Grid.Col>
                 <Grid.Col span={{ base: 12, sm: 6 }}>
-                  <FieldView label='Home Town'>{student.homeTown}</FieldView>
+                  <InfoItem label='Home Town' value={student.homeTown} />
                 </Grid.Col>
               </Grid>
-            </Stack>
-          </Paper>
+            </Paper>
+          </div>
 
-          <Paper shadow='xs' p='md' radius='md'>
-            <Stack gap='md'>
-              <Title order={4}>Education & Background</Title>
-              <Grid>
+          <div>
+            <Title order={4} mb='xs' fw={100}>
+              Education & Background
+            </Title>
+            <Paper p='md' radius='md' withBorder>
+              <Grid gutter='xl'>
                 <Grid.Col span={{ base: 12, sm: 6 }}>
-                  <FieldView label='High School'>
-                    {student.highSchool}
-                  </FieldView>
-                </Grid.Col>
-                <Grid.Col span={{ base: 12, sm: 6 }}>
-                  <FieldView label='Religion'>{student.religion}</FieldView>
+                  <InfoItem label='High School' value={student.highSchool} />
                 </Grid.Col>
               </Grid>
-            </Stack>
-          </Paper>
-
-          <Paper shadow='xs' p='md' radius='md'>
-            <Stack gap='md'>
-              <Title order={4}>Emergency Contact</Title>
-              <Grid>
-                <Grid.Col span={{ base: 12, sm: 6 }}>
-                  <Group justify='space-between' wrap='nowrap'>
-                    <FieldView label='Next Of Kin Names'>
-                      {student.nextOfKinName}
-                    </FieldView>
-                    <CopyButton text={student.nextOfKinName} />
-                  </Group>
-                </Grid.Col>
-                <Grid.Col span={{ base: 12, sm: 6 }}>
-                  <Group justify='space-between' wrap='nowrap'>
-                    <FieldView label='Next Of Kin Phone'>
-                      {student.nextOfKinPhone}
-                    </FieldView>
-                    <CopyButton text={student.nextOfKinPhone} />
-                  </Group>
-                </Grid.Col>
-                <Grid.Col span={{ base: 12, sm: 6 }}>
-                  <FieldView label='Next Of Kin Relationship'>
-                    {student.nextOfKinRelationship}
-                  </FieldView>
-                </Grid.Col>
-              </Grid>
-            </Stack>
-          </Paper>
+            </Paper>
+          </div>
         </Stack>
       </DetailsViewBody>
     </DetailsView>
   );
 }
 
-function CopyButton({ text }: { text: string | null }) {
-  const handleCopy = () => {
-    if (text) {
-      navigator.clipboard.writeText(text);
-      notifications.show({
-        message: 'Copied to clipboard',
-        color: 'green',
-      });
-    }
-  };
+function InfoItem({
+  label,
+  value,
+  copyable = false,
+}: {
+  label: string;
+  value: string | null | Date;
+  copyable?: boolean;
+}) {
+  const displayValue = value instanceof Date ? formatDate(value) : value;
 
   return (
-    <ActionIcon
-      variant='subtle'
-      size='sm'
-      onClick={handleCopy}
-      aria-label='Copy to clipboard'
-    >
-      <IconCopy size='1rem' />
-    </ActionIcon>
+    <Group wrap='nowrap' gap='xs'>
+      <div style={{ flex: 1 }}>
+        <Text size='sm' c='dimmed'>
+          {label}
+        </Text>
+        <Text size='sm' fw={500}>
+          {displayValue || 'N/A'}
+        </Text>
+      </div>
+      {copyable && displayValue && (
+        <Tooltip label='Copy'>
+          <ActionIcon
+            variant='subtle'
+            color='gray'
+            onClick={() => {
+              navigator.clipboard.writeText(displayValue);
+              notifications.show({
+                message: 'Copied to clipboard',
+                color: 'green',
+              });
+            }}
+          >
+            <IconCopy size={16} />
+          </ActionIcon>
+        </Tooltip>
+      )}
+    </Group>
   );
 }
