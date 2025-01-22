@@ -1,13 +1,9 @@
 'use client';
 
-import { PropsWithChildren } from 'react';
 import { ListItem, ListLayout, NewLink } from '@/components/adease';
 import { findAllStudents } from '@/server/students/actions';
-import {
-  IconCheck,
-  IconCircleCheck,
-  IconExclamationCircle,
-} from '@tabler/icons-react';
+import { IconCheck, IconExclamationCircle } from '@tabler/icons-react';
+import { PropsWithChildren } from 'react';
 
 export default function Layout({ children }: PropsWithChildren) {
   return (

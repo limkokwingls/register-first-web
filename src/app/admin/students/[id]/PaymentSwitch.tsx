@@ -8,11 +8,8 @@ import {
   IconExclamationCircle,
   IconExclamationMark,
 } from '@tabler/icons-react';
+import { useQueryClient } from '@tanstack/react-query';
 import { useState, useTransition } from 'react';
-
-type Property = typeof students.$inferSelect & {
-  isPaid: boolean;
-};
 
 type Props = {
   student: typeof students.$inferSelect;
@@ -22,6 +19,7 @@ export default function PaymentSwitch({ student }: Props) {
   const theme = useMantineTheme();
   const [isPaid, setIsPaid] = useState<boolean>(student.paid);
   const [isPending, startTransition] = useTransition();
+  const queryClient = useQueryClient();
 
   function update() {
     const status = !isPaid;
@@ -32,6 +30,9 @@ export default function PaymentSwitch({ student }: Props) {
         await updateStudent(student.id, {
           ...student,
           paid: status,
+        });
+        queryClient.invalidateQueries({
+          queryKey: ['students'],
         });
         notifications.show({
           title: status ? 'Paid' : 'Unpaid',
