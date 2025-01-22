@@ -140,6 +140,7 @@ export const students = sqliteTable(
     nextOfKinName: text().notNull(),
     nextOfKinPhone: text().notNull(),
     nextOfKinRelationship: text({ enum: nextOfKinRelationships }).notNull(),
+    paid: integer({ mode: 'boolean' }).notNull().default(false),
     createdAt: integer({ mode: 'timestamp' }).default(sql`(unixepoch())`),
     updatedAt: integer({ mode: 'timestamp' }),
   },

@@ -9,6 +9,7 @@ import { students } from '@/db/schema';
 import { formatDate } from '@/lib/utils';
 import {
   ActionIcon,
+  Divider,
   Grid,
   Group,
   Paper,
@@ -19,6 +20,7 @@ import {
 } from '@mantine/core';
 import { notifications } from '@mantine/notifications';
 import { IconCopy } from '@tabler/icons-react';
+import PaymentSwitch from './PaymentSwitch';
 
 type Props = {
   student: typeof students.$inferSelect;
@@ -30,6 +32,8 @@ export default function StudentView({ student }: Props) {
       <DetailsViewHeader title={student.name} queryKey={['students']} />
       <DetailsViewBody>
         <Stack>
+          <PaymentSwitch student={student} />
+          <Divider my={'sm'} />
           <div>
             <Title order={4} mb='xs' fw={100}>
               Personal Information
