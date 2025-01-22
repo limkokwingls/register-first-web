@@ -1,4 +1,3 @@
-import { sql } from 'drizzle-orm';
 import {
   index,
   integer,
@@ -8,6 +7,7 @@ import {
 } from 'drizzle-orm/sqlite-core';
 import { nanoid } from 'nanoid';
 import type { AdapterAccountType } from 'next-auth/adapters';
+import { sql } from 'drizzle-orm';
 
 export const userRoles = ['user', 'marketing', 'registry', 'admin'] as const;
 export type UserRole = (typeof userRoles)[number];
