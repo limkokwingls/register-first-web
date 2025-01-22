@@ -8,7 +8,7 @@ export default function Home() {
           Registration Form
         </h1>
         <p className='text-sm sm:text-base text-gray-600'>
-          Registration form for first year students
+          Registration form for TVET students
         </p>
       </header>
       <div className='mt-5'>

@@ -8,7 +8,7 @@ const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
   title: 'Limkokwing Registration',
-  description: 'Limkokwing Registration Form for new students',
+  description: 'Limkokwing Registration Form for TVET students',
 };
 
 export default function RootLayout({
