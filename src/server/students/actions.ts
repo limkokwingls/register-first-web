@@ -1,14 +1,16 @@
 'use server';
 
-
 import { students } from '@/db/schema';
-import { studentsService as service} from './service';
+import { studentsService as service } from './service';
 
 type Student = typeof students.$inferInsert;
 
-
 export async function getStudent(id: number) {
   return service.get(id);
+}
+
+export async function getStudentByNationalId(nationalId: string) {
+  return service.findByNationalId(nationalId);
 }
 
 export async function findAllStudents(page: number = 1, search = '') {

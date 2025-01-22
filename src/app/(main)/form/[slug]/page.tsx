@@ -1,9 +1,9 @@
 import React from 'react';
 import RegistrationForm from './RegistrationForm';
 import { getRegistration } from '../service';
-import { Timestamp } from 'firebase/firestore';
 import StudentInfo from '@/app/(main)/models/StudentInfo';
 import StudentPicker from './StudentPicker';
+import { getStudent, getStudentByNationalId } from '@/server/students/actions';
 
 type Props = {
   params: {
@@ -18,29 +18,16 @@ export default async function FormPage({
   params: { slug },
   searchParams,
 }: Props) {
-  const res = (await getRegistration(slug)) as StudentInfo;
-  const dateOfBirth = timestampToDate(res?.dateOfBirth);
   const reference = searchParams.ref || '';
-
-  const obj = {
-    ...res,
-    dateOfBirth,
-  };
+  const student = await getStudentByNationalId(slug);
 
   return (
     <main className='py-10'>
-      {res ? (
-        <StudentPicker reference={reference} nationalId={slug} obj={obj} />
+      {student ? (
+        <StudentPicker reference={reference} nationalId={slug} obj={student} />
       ) : (
         <RegistrationForm reference={reference} nationalId={slug} />
       )}
     </main>
   );
-}
-
-function timestampToDate(dateOfBirth: Timestamp | any) {
-  if (dateOfBirth) {
-    return dateOfBirth.toDate().toISOString().split('T')[0];
-  }
-  return '';
 }
