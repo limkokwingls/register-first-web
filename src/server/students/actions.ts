@@ -14,7 +14,11 @@ export async function getStudentByNationalId(nationalId: string) {
 }
 
 export async function findAllStudents(page: number = 1, search = '') {
-  return service.findAll({ page, search });
+  return service.findAll({
+    page,
+    search,
+    searchProperties: ['name', 'nationalId'],
+  });
 }
 
 export async function createStudent(student: Student) {
