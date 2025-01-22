@@ -8,7 +8,7 @@ type Props = {
 
 export default async function StudentDetails({ params }: Props) {
   const { id } = await params;
-  const student = await getStudent(Number(id));
+  const student = await getStudent(id);
 
   if (!student) {
     return notFound();

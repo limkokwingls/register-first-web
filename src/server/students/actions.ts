@@ -5,7 +5,7 @@ import { studentsService as service } from './service';
 
 type Student = typeof students.$inferInsert;
 
-export async function getStudent(id: number) {
+export async function getStudent(id: string) {
   return service.get(id);
 }
 
@@ -25,10 +25,10 @@ export async function createStudent(student: Student) {
   return service.create(student);
 }
 
-export async function updateStudent(id: number, student: Student) {
+export async function updateStudent(id: string, student: Student) {
   return service.update(id, student);
 }
 
-export async function deleteStudent(id: number) {
+export async function deleteStudent(id: string) {
   return service.delete(id);
 }

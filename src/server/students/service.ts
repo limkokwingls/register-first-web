@@ -12,7 +12,7 @@ class StudentService {
     return withAuth(async () => this.repository.findFirst(), []);
   }
 
-  async get(id: number) {
+  async get(id: string) {
     return withAuth(async () => this.repository.findById(id), []);
   }
 
@@ -31,11 +31,11 @@ class StudentService {
     return withAuth(async () => this.repository.create(data), ['all']);
   }
 
-  async update(id: number, data: Student) {
+  async update(id: string, data: Student) {
     return withAuth(async () => this.repository.update(id, data), ['all']);
   }
 
-  async delete(id: number) {
+  async delete(id: string) {
     return withAuth(async () => this.repository.delete(id), []);
   }
 

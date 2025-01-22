@@ -123,7 +123,9 @@ export const religions = [
 export const students = sqliteTable(
   'students',
   {
-    id: integer().primaryKey({ autoIncrement: true }),
+    id: text()
+      .primaryKey()
+      .$defaultFn(() => nanoid()),
     nationalId: text().notNull(),
     reference: text(),
     name: text().notNull(),
