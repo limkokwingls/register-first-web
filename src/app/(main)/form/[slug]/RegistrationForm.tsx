@@ -5,7 +5,7 @@ import StudentInfo, {
   MaritalStatuses,
   Relationships,
   Religions,
-} from '@/app/models/StudentInfo';
+} from '@/app/(main)/models/StudentInfo';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';

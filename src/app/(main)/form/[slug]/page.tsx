@@ -2,7 +2,7 @@ import React from 'react';
 import RegistrationForm from './RegistrationForm';
 import { getRegistration } from '../service';
 import { Timestamp } from 'firebase/firestore';
-import StudentInfo from '@/app/models/StudentInfo';
+import StudentInfo from '@/app/(main)/models/StudentInfo';
 import StudentPicker from './StudentPicker';
 
 type Props = {

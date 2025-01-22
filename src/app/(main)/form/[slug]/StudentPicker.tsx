@@ -1,5 +1,5 @@
 'use client';
-import StudentInfo from '@/app/models/StudentInfo';
+import StudentInfo from '@/app/(main)/models/StudentInfo';
 import { Button } from '@/components/ui/button';
 import {
   Card,
@@ -23,7 +23,13 @@ export default function StudentPicker({ reference, nationalId, obj }: Props) {
   const [agree, setAgree] = useState<'yes' | 'no'>();
 
   if (agree === 'yes') {
-    return <RegistrationForm reference={reference} nationalId={nationalId} obj={obj} />;
+    return (
+      <RegistrationForm
+        reference={reference}
+        nationalId={nationalId}
+        obj={obj}
+      />
+    );
   }
   if (agree === 'no') {
     return <RegistrationForm reference={reference} nationalId={nationalId} />;
