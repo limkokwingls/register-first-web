@@ -5,14 +5,17 @@ import type { Adapter } from 'next-auth/adapters';
 import Google from 'next-auth/providers/google';
 import { accounts, sessions, users, verificationTokens } from '@/db/schema';
 
+const tables: any = {
+  usersTable: users,
+  accountsTable: accounts,
+  sessionsTable: sessions,
+  verificationTokensTable: verificationTokens,
+};
+
+const database: any = db;
 export const { handlers, signIn, signOut, auth } = NextAuth({
   providers: [Google],
-  adapter: DrizzleAdapter(db, {
-    usersTable: users,
-    accountsTable: accounts,
-    sessionsTable: sessions,
-    verificationTokensTable: verificationTokens,
-  }) as Adapter,
+  adapter: DrizzleAdapter(database, tables) as Adapter,
   callbacks: {
     async session({ session, user }) {
       session.user.role = user.role;
