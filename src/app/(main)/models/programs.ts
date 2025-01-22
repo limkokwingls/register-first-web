@@ -30,8 +30,13 @@ const programs: Program[] = [
   },
 ];
 
+export function getProgramByReference(reference: string): Program | undefined {
+  const [prefix, program, number] = reference.split('-');
+  return getProgramByCode(program.toUpperCase());
+}
+
 export function getProgramByCode(code: string): Program | undefined {
-  return programs.find((program) => program.code === code);
+  return programs.find((program) => program.code === code.toUpperCase());
 }
 
 export default programs;

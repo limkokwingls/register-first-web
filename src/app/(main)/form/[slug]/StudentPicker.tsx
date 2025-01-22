@@ -1,5 +1,4 @@
 'use client';
-import StudentInfo from '@/app/(main)/models/StudentInfo';
 import { Button } from '@/components/ui/button';
 import {
   Card,
@@ -12,15 +11,18 @@ import {
 import { Label } from '@/components/ui/label';
 import { useState } from 'react';
 import RegistrationForm from './RegistrationForm';
+import { students } from '@/db/schema';
+import { getProgramByCode, getProgramByReference } from '../../models/programs';
 
 type Props = {
   reference: string;
   nationalId: string;
-  obj?: StudentInfo;
+  obj?: typeof students.$inferSelect;
 };
 
 export default function StudentPicker({ reference, nationalId, obj }: Props) {
   const [agree, setAgree] = useState<'yes' | 'no'>();
+  const program = getProgramByReference(reference);
 
   if (agree === 'yes') {
     return (
@@ -50,7 +52,7 @@ export default function StudentPicker({ reference, nationalId, obj }: Props) {
             <div className='grid w-full items-center gap-4'>
               <div className='flex flex-col space-y-1.5'>
                 <Label htmlFor='name'>Name</Label>
-                <p>{obj?.names}</p>
+                <p>{obj?.name}</p>
               </div>
               <div className='flex flex-col space-y-1.5'>
                 <Label htmlFor='nationalId'>National ID</Label>
@@ -58,7 +60,7 @@ export default function StudentPicker({ reference, nationalId, obj }: Props) {
               </div>
               <div className='flex flex-col space-y-1.5'>
                 <Label htmlFor='course'>Course</Label>
-                <p>{obj?.program.name}</p>
+                <p>{program?.name}</p>
               </div>
             </div>
           </form>

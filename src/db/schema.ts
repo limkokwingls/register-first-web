@@ -125,9 +125,7 @@ export const students = sqliteTable(
   {
     id: integer().primaryKey({ autoIncrement: true }),
     nationalId: text().notNull(),
-    userId: text()
-      .notNull()
-      .references(() => users.id, { onDelete: 'cascade' }),
+    reference: text(),
     name: text().notNull(),
     email: text().notNull().unique(),
     phone1: text().notNull(),
@@ -139,7 +137,7 @@ export const students = sqliteTable(
     birthPlace: text().notNull(),
     homeTown: text().notNull(),
     highSchool: text().notNull(),
-    nextOfKinNames: text().notNull(),
+    nextOfKinName: text().notNull(),
     nextOfKinPhone: text().notNull(),
     nextOfKinRelationship: text({ enum: nextOfKinRelationships }).notNull(),
     createdAt: integer({ mode: 'timestamp' }).default(sql`(unixepoch())`),

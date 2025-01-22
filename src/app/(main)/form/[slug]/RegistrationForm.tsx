@@ -1,11 +1,5 @@
 'use client';
 
-import StudentInfo, {
-  Genders,
-  MaritalStatuses,
-  Relationships,
-  Religions,
-} from '@/app/(main)/models/StudentInfo';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -17,16 +11,27 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
+import {
+  genders,
+  maritalStatuses,
+  nextOfKinRelationships,
+  religions,
+  students,
+} from '@/db/schema';
+import { createStudent } from '@/server/students/actions';
 import { IconReload } from '@tabler/icons-react';
 import { ArrowLeft } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
-import { saveRegister } from '../service';
+
+type Student = typeof students.$inferSelect & {
+  confirmEmail: string;
+};
 
 type Props = {
   reference: string;
   nationalId: string;
-  obj?: StudentInfo;
+  obj?: typeof students.$inferSelect;
 };
 
 export default function RegistrationForm({
@@ -39,15 +44,15 @@ export default function RegistrationForm({
     control,
     handleSubmit,
     formState: { errors, isSubmitting },
-  } = useForm<StudentInfo>({
+  } = useForm<Student>({
     defaultValues: obj || {
       nationalId,
     },
   });
   const router = useRouter();
 
-  const onSubmit: SubmitHandler<StudentInfo> = async (data) => {
-    await saveRegister(reference, data);
+  const onSubmit: SubmitHandler<Student> = async (data) => {
+    await createStudent({ ...data, reference });
     router.replace('/success');
   };
 
@@ -83,10 +88,10 @@ export default function RegistrationForm({
               <Label htmlFor='names'>Full Names</Label>
               <Input
                 id='names'
-                {...register('names', { required: 'Full name is required' })}
+                {...register('name', { required: 'Full name is required' })}
               />
-              {errors.names && (
-                <p className='text-red-500 text-sm'>{errors.names.message}</p>
+              {errors.name && (
+                <p className='text-red-500 text-sm'>{errors.name.message}</p>
               )}
             </div>
 
@@ -153,7 +158,7 @@ export default function RegistrationForm({
                       <SelectValue placeholder='Select religion' />
                     </SelectTrigger>
                     <SelectContent>
-                      {Religions.map((religion) => (
+                      {religions.map((religion) => (
                         <SelectItem key={religion} value={religion}>
                           {religion}
                         </SelectItem>
@@ -201,7 +206,7 @@ export default function RegistrationForm({
                       <SelectValue placeholder='Select gender' />
                     </SelectTrigger>
                     <SelectContent>
-                      {Genders.map((gender) => (
+                      {genders.map((gender) => (
                         <SelectItem key={gender} value={gender}>
                           {gender}
                         </SelectItem>
@@ -230,7 +235,7 @@ export default function RegistrationForm({
                       <SelectValue placeholder='Select marital status' />
                     </SelectTrigger>
                     <SelectContent>
-                      {MaritalStatuses.map((status) => (
+                      {maritalStatuses.map((status) => (
                         <SelectItem key={status} value={status}>
                           {status}
                         </SelectItem>
@@ -297,13 +302,13 @@ export default function RegistrationForm({
                 <Label htmlFor='nextOfKinNames'>Names</Label>
                 <Input
                   id='nextOfKinNames'
-                  {...register('nextOfKin.names', {
+                  {...register('nextOfKinName', {
                     required: 'Next of kin name is required',
                   })}
                 />
-                {errors.nextOfKin?.names && (
+                {errors.nextOfKinName && (
                   <p className='text-red-500 text-sm'>
-                    {errors.nextOfKin.names.message}
+                    {errors.nextOfKinName.message}
                   </p>
                 )}
               </div>
@@ -312,13 +317,13 @@ export default function RegistrationForm({
                 <Label htmlFor='nextOfKinPhone'>Phone</Label>
                 <Input
                   id='nextOfKinPhone'
-                  {...register('nextOfKin.phone', {
+                  {...register('nextOfKinPhone', {
                     required: 'Next of kin phone is required',
                   })}
                 />
-                {errors.nextOfKin?.phone && (
+                {errors.nextOfKinPhone && (
                   <p className='text-red-500 text-sm'>
-                    {errors.nextOfKin.phone.message}
+                    {errors.nextOfKinPhone.message}
                   </p>
                 )}
               </div>
@@ -326,7 +331,7 @@ export default function RegistrationForm({
               <div className='space-y-2 md:col-span-2'>
                 <Label htmlFor='nextOfKinRelationship'>Relationship</Label>
                 <Controller
-                  name='nextOfKin.relationship'
+                  name='nextOfKinRelationship'
                   control={control}
                   rules={{ required: 'Relationship is required' }}
                   render={({ field }) => (
@@ -338,7 +343,7 @@ export default function RegistrationForm({
                         <SelectValue placeholder='Select relationship' />
                       </SelectTrigger>
                       <SelectContent>
-                        {Relationships.map((relationship) => (
+                        {nextOfKinRelationships.map((relationship) => (
                           <SelectItem key={relationship} value={relationship}>
                             {relationship}
                           </SelectItem>
@@ -347,9 +352,9 @@ export default function RegistrationForm({
                     </Select>
                   )}
                 />
-                {errors.nextOfKin?.relationship && (
+                {errors.nextOfKinRelationship && (
                   <p className='text-red-500 text-sm'>
-                    {errors.nextOfKin.relationship.message}
+                    {errors.nextOfKinRelationship.message}
                   </p>
                 )}
               </div>

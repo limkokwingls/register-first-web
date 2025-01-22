@@ -7,9 +7,9 @@ import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Button } from '@/components/ui/button';
 import { useRouter } from 'next/navigation';
 import { cn } from '@/lib/utils';
-import { getRegistration } from './service';
 import { useTransition } from 'react';
 import { Loader2 } from 'lucide-react';
+import { getStudentByNationalId } from '@/server/students/actions';
 
 type Programs = {
   [key: string]: string[];
@@ -76,7 +76,7 @@ export default function ReferenceNumberInput() {
 
     if (valid) {
       startTransition(async () => {
-        const existingStudent = await getRegistration(nationalId);
+        const existingStudent = await getStudentByNationalId(nationalId);
         const referenceNumber =
           existingStudent?.reference || refParts.join('-').toLowerCase();
         router.push(`/form/${nationalId}?ref=${referenceNumber}`);

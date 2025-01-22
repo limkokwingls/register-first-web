@@ -1,9 +1,6 @@
-import React from 'react';
+import { getStudentByNationalId } from '@/server/students/actions';
 import RegistrationForm from './RegistrationForm';
-import { getRegistration } from '../service';
-import StudentInfo from '@/app/(main)/models/StudentInfo';
 import StudentPicker from './StudentPicker';
-import { getStudent, getStudentByNationalId } from '@/server/students/actions';
 
 type Props = {
   params: {
