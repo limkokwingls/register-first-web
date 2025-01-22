@@ -1,7 +1,12 @@
 'use client';
 
-import React, { useEffect } from 'react';
-import { useForm, SubmitHandler, Controller } from 'react-hook-form';
+import StudentInfo, {
+  Genders,
+  MaritalStatuses,
+  Relationships,
+  Religions,
+} from '@/app/models/StudentInfo';
+import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -12,22 +17,11 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { Button } from '@/components/ui/button';
 import { IconReload } from '@tabler/icons-react';
-import { saveRegister } from '../service';
+import { ArrowLeft } from 'lucide-react';
 import { useRouter } from 'next/navigation';
-import StudentInfo, {
-  Genders,
-  MaritalStatuses,
-  Relationships,
-  Religions,
-} from '@/app/models/StudentInfo';
-import {
-  ArrowLeft,
-  ChevronLeftIcon,
-  ChevronRightIcon,
-  Link,
-} from 'lucide-react';
+import { Controller, SubmitHandler, useForm } from 'react-hook-form';
+import { saveRegister } from '../service';
 
 type Props = {
   reference: string;

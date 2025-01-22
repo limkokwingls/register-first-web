@@ -7,6 +7,9 @@ import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Button } from '@/components/ui/button';
 import { useRouter } from 'next/navigation';
 import { cn } from '@/lib/utils';
+import { getRegistration } from './service';
+import { useTransition } from 'react';
+import { Loader2 } from 'lucide-react';
 
 type Programs = {
   [key: string]: string[];
@@ -20,6 +23,7 @@ export default function ReferenceNumberInput() {
   const [refParts, setRefParts] = useState<string[]>(['TVET', '', '']);
   const [nationalId, setNationalId] = useState<string>('');
   const [isValid, setIsValid] = useState<boolean>(true);
+  const [isPending, startTransition] = useTransition();
   const inputRefs = [
     useRef<HTMLInputElement>(null),
     useRef<HTMLInputElement>(null),
@@ -47,7 +51,7 @@ export default function ReferenceNumberInput() {
   };
 
   const validateNationalId = (id: string): boolean => {
-    return id.length > 0;
+    return id.length === 13;
   };
 
   const handleInputChange = (index: number, value: string): void => {
@@ -71,8 +75,11 @@ export default function ReferenceNumberInput() {
     setIsValid(valid);
     
     if (valid) {
-      const referenceNumber = refParts.join('-').toLowerCase();
-      router.push(`/form/${nationalId}?ref=${referenceNumber}`);
+      startTransition(async () => {
+        const existingStudent = await getRegistration(nationalId);
+        const referenceNumber = existingStudent?.reference || refParts.join('-').toLowerCase();
+        router.push(`/form/${nationalId}?ref=${referenceNumber}`);
+      });
     }
   };
 
@@ -102,6 +109,19 @@ export default function ReferenceNumberInput() {
 
         <div className='space-y-4'>
           <div>
+            <Label htmlFor='nationalId'>National ID Number</Label>
+            <Input
+              ref={nationalIdRef}
+              id='nationalId'
+              value={nationalId}
+              onChange={(e) => handleNationalIdChange(e.target.value)}
+              className={cn(!isValid && !validateNationalId(nationalId) && 'border-red-500')}
+              placeholder='Enter your National ID number'
+              disabled={isPending}
+            />
+          </div>
+
+          <div>
             <Label htmlFor='refNumber'>Reference Number</Label>
             <div className='flex items-center space-x-1'>
               <Input
@@ -121,6 +141,7 @@ export default function ReferenceNumberInput() {
                       index === 1 ? 'w-20' : 'w-16',
                       !isValid && 'border-red-500'
                     )}
+                    disabled={isPending}
                   />
                   {index === 1 && <span className='text-xl font-bold'>/</span>}
                 </React.Fragment>
@@ -128,24 +149,19 @@ export default function ReferenceNumberInput() {
             </div>
           </div>
 
-          <div>
-            <Label htmlFor='nationalId'>National ID Number</Label>
-            <Input
-              ref={nationalIdRef}
-              id='nationalId'
-              value={nationalId}
-              onChange={(e) => handleNationalIdChange(e.target.value)}
-              className={cn(!isValid && !validateNationalId(nationalId) && 'border-red-500')}
-              placeholder='Enter your National ID number'
-            />
-          </div>
-
           <Button
             onClick={handleSubmit}
             className='w-full'
-            disabled={!validateReference() || !validateNationalId(nationalId)}
+            disabled={!validateReference() || !validateNationalId(nationalId) || isPending}
           >
-            Continue
+            {isPending ? (
+              <>
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                Please wait
+              </>
+            ) : (
+              'Continue'
+            )}
           </Button>
 
           {!isValid && (
