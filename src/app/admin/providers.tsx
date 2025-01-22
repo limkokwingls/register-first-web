@@ -6,6 +6,7 @@ import React from 'react';
 import { SessionProvider } from 'next-auth/react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { NuqsAdapter } from 'nuqs/adapters/next/app';
+import { AppProgressBar } from 'next-nprogress-bar';
 
 const queryClient = new QueryClient();
 
@@ -16,7 +17,15 @@ export default function Providers({ children }: { children: React.ReactNode }) {
         <Notifications />
         <ModalsProvider>
           <QueryClientProvider client={queryClient}>
-            <NuqsAdapter>{children}</NuqsAdapter>
+            <NuqsAdapter>
+              {children}
+              <AppProgressBar
+                height='3px'
+                color='#2196F3'
+                options={{ showSpinner: false }}
+                shallowRouting
+              />
+            </NuqsAdapter>
           </QueryClientProvider>
         </ModalsProvider>
       </MantineProvider>
