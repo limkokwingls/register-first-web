@@ -43,11 +43,6 @@ export type NavItem = {
 
 const navigation: NavItem[] = [
   {
-    label: 'Users',
-    href: '/admin/users',
-    icon: IconUser,
-  },
-  {
     label: 'Students',
     href: '/admin/students',
     icon: IconUsers,
