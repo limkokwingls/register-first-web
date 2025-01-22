@@ -8,25 +8,18 @@ import { Button } from '@/components/ui/button';
 import { useRouter } from 'next/navigation';
 import { cn } from '@/lib/utils';
 
-type FacultyPrograms = {
+type Programs = {
   [key: string]: string[];
 };
 
-const facultyPrograms: FacultyPrograms = {
-  FABE: ['BAAS', 'DAT'],
-  FBMG: ['BEN', 'BHR', 'BIB', 'DBM', 'DMK', 'DRM'],
-  FCMB: ['BPC', 'DJM', 'DPR', 'BBJ', 'BDF', 'DBRTV', 'DFP'],
-  FCTH: ['BTM', 'DEM', 'DHM', 'DITR', 'DTM'],
-  FDI: ['BDSPD', 'DCAV', 'DGD', 'BAFASH', 'DFAD'],
-  FICT: ['BSCBIT', 'BSCIT', 'BSCSM', 'DBIT', 'DIT', 'DMSE'],
+const programs: Programs = {
+  TVET: ['CBIT', 'CPA', 'CAT', 'CGD', 'CMK', 'CTM'],
 };
 
-const ReferenceNumberInput = () => {
-  const [refParts, setRefParts] = useState<string[]>(['LUCT', '', '', '', '']);
+export default function ReferenceNumberInput() {
+  const [refParts, setRefParts] = useState<string[]>(['TVET', '', '']);
   const [isValid, setIsValid] = useState<boolean>(true);
   const inputRefs = [
-    useRef<HTMLInputElement>(null),
-    useRef<HTMLInputElement>(null),
     useRef<HTMLInputElement>(null),
     useRef<HTMLInputElement>(null),
     useRef<HTMLInputElement>(null),
@@ -34,42 +27,29 @@ const ReferenceNumberInput = () => {
   const router = useRouter();
 
   const validateReference = (): boolean => {
-    const [, faculty, program, admissionCode, number] = refParts;
+    const [prefix, program, number] = refParts;
 
-    if (!Object.keys(facultyPrograms).includes(faculty.toUpperCase())) {
+    if (prefix !== 'TVET') {
       return false;
     }
-    if (!facultyPrograms[faculty].includes(program.toUpperCase())) {
+
+    if (!programs['TVET'].includes(program.toUpperCase())) {
       return false;
     }
-    if (['A', 'W', 'P'].indexOf(admissionCode.toUpperCase()) === -1) {
+
+    if (!/^\d+$/.test(number)) {
       return false;
     }
-    if (!/^[0-9P]+$/.test(number)) {
-      return false;
-    }
+
     return true;
   };
 
   const handleInputChange = (index: number, value: string): void => {
     const newRefParts = [...refParts];
-    if (index === 3) {
-      newRefParts[index] = value.replace(/[^awp]/gi, '').toUpperCase();
-    }
-    if (index === 4) {
-      newRefParts[index] = value.replace(/[^p0-9]/gi, '').toUpperCase();
-    } else {
-      newRefParts[index] = value.toUpperCase();
-    }
+    newRefParts[index] = value.toUpperCase();
     setRefParts(newRefParts);
 
-    if (index === 1 && isFaculty(value)) {
-      inputRefs[index + 1].current?.focus();
-    }
-    if (index === 2 && isProgram(value, refParts[1])) {
-      inputRefs[index + 1].current?.focus();
-    }
-    if (index === 3 && value.length === 1) {
+    if (index === 1 && isValidProgram(value)) {
       inputRefs[index + 1].current?.focus();
     }
   };
@@ -85,7 +65,6 @@ const ReferenceNumberInput = () => {
 
   useEffect(() => {
     inputRefs[1].current?.focus();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -100,11 +79,10 @@ const ReferenceNumberInput = () => {
           <AlertDescription>
             <p>
               Your reference number is located at the top of your admission
-              letter. It follows this format: LUCT/XXXX/XXXX/X/XX
+              letter. It follows this format: TVET/XXXX/XX
             </p>
             <p className='text-sm text-gray-500 mt-3'>
-              For example: LUCT/FICT/BSCSM/<span className='font-bold'>P</span>
-              /32
+              For example: TVET/CBIT/1
             </p>
           </AlertDescription>
         </Alert>
@@ -118,21 +96,17 @@ const ReferenceNumberInput = () => {
               className='w-16 text-center bg-gray-100'
             />
             <span className='text-xl font-bold'>/</span>
-            {[1, 2, 3, 4].map((index, arrayIndex) => (
+            {[1, 2].map((index) => (
               <React.Fragment key={index}>
                 <Input
                   ref={inputRefs[index]}
                   value={refParts[index]}
                   onChange={(e) => handleInputChange(index, e.target.value)}
-                  className={cn(
-                    'w-12 sm:w-20 text-center p-0',
-                    index === 3 && 'w-8 sm:w-12',
-                    index === 4 && 'w-8 sm:w-12'
-                  )}
-                  maxLength={index === 3 ? 1 : 6}
-                  placeholder={index === 3 ? 'X' : index === 4 ? 'XX' : 'XXXX'}
+                  className={cn('w-20 text-center', index === 2 && 'w-12')}
+                  maxLength={index === 1 ? 4 : 3}
+                  placeholder={index === 1 ? 'XXXX' : 'XX'}
                 />
-                {arrayIndex < 3 && <span className='text-xl font-bold'>/</span>}
+                {index < 2 && <span className='text-xl font-bold'>/</span>}
               </React.Fragment>
             ))}
           </div>
@@ -154,14 +128,8 @@ const ReferenceNumberInput = () => {
       </CardContent>
     </Card>
   );
-};
-
-export default ReferenceNumberInput;
-
-function isFaculty(value: string): boolean {
-  return Object.keys(facultyPrograms).includes(value.toUpperCase());
 }
 
-function isProgram(value: string, faculty: string): boolean {
-  return facultyPrograms[faculty].includes(value.toUpperCase());
+function isValidProgram(value: string): boolean {
+  return programs['TVET'].includes(value.toUpperCase());
 }
