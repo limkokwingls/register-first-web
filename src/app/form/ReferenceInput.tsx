@@ -73,11 +73,12 @@ export default function ReferenceNumberInput() {
     const idValid = validateNationalId(nationalId);
     const valid = refValid && idValid;
     setIsValid(valid);
-    
+
     if (valid) {
       startTransition(async () => {
         const existingStudent = await getRegistration(nationalId);
-        const referenceNumber = existingStudent?.reference || refParts.join('-').toLowerCase();
+        const referenceNumber =
+          existingStudent?.reference || refParts.join('-').toLowerCase();
         router.push(`/form/${nationalId}?ref=${referenceNumber}`);
       });
     }
@@ -115,7 +116,9 @@ export default function ReferenceNumberInput() {
               id='nationalId'
               value={nationalId}
               onChange={(e) => handleNationalIdChange(e.target.value)}
-              className={cn(!isValid && !validateNationalId(nationalId) && 'border-red-500')}
+              className={cn(
+                !isValid && !validateNationalId(nationalId) && 'border-red-500'
+              )}
               placeholder='Enter your National ID number'
               disabled={isPending}
             />
@@ -136,9 +139,9 @@ export default function ReferenceNumberInput() {
                     ref={inputRefs[index]}
                     value={refParts[index]}
                     onChange={(e) => handleInputChange(index, e.target.value)}
+                    placeholder='XXXX'
                     className={cn(
-                      'text-center',
-                      index === 1 ? 'w-20' : 'w-16',
+                      'text-center w-20',
                       !isValid && 'border-red-500'
                     )}
                     disabled={isPending}
@@ -152,11 +155,15 @@ export default function ReferenceNumberInput() {
           <Button
             onClick={handleSubmit}
             className='w-full'
-            disabled={!validateReference() || !validateNationalId(nationalId) || isPending}
+            disabled={
+              !validateReference() ||
+              !validateNationalId(nationalId) ||
+              isPending
+            }
           >
             {isPending ? (
               <>
-                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                <Loader2 className='mr-2 h-4 w-4 animate-spin' />
                 Please wait
               </>
             ) : (
