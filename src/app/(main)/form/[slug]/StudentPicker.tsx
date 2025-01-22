@@ -9,10 +9,10 @@ import {
   CardTitle,
 } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
-import { useState } from 'react';
-import RegistrationForm from './RegistrationForm';
 import { students } from '@/db/schema';
-import { getProgramByCode, getProgramByReference } from '../../models/programs';
+import { useState } from 'react';
+import { getProgramByReference } from '../../models/programs';
+import RegistrationForm from './RegistrationForm';
 
 type Props = {
   reference: string;

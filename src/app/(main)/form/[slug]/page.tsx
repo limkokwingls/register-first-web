@@ -3,19 +3,17 @@ import RegistrationForm from './RegistrationForm';
 import StudentPicker from './StudentPicker';
 
 type Props = {
-  params: {
+  params: Promise<{
     slug: string;
-  };
-  searchParams: {
+  }>;
+  searchParams: Promise<{
     ref?: string;
-  };
+  }>;
 };
 
-export default async function FormPage({
-  params: { slug },
-  searchParams,
-}: Props) {
-  const reference = searchParams.ref || '';
+export default async function FormPage({ params, searchParams }: Props) {
+  const reference = (await searchParams).ref || '';
+  const { slug } = await params;
   const student = await getStudentByNationalId(slug);
 
   return (
