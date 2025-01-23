@@ -51,7 +51,7 @@ export default function ReferenceNumberInput() {
   };
 
   const validateNationalId = (id: string): boolean => {
-    return id.length === 13;
+    return id.length >= 10 && /^\d+$/.test(id) && id.length <= 13;
   };
 
   const handleInputChange = (index: number, value: string): void => {
