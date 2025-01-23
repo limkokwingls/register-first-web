@@ -9,6 +9,7 @@ import { students } from '@/db/schema';
 import { formatDate } from '@/lib/utils';
 import {
   ActionIcon,
+  Card,
   Divider,
   Grid,
   Group,
@@ -21,6 +22,10 @@ import {
 import { notifications } from '@mantine/notifications';
 import { IconCopy } from '@tabler/icons-react';
 import PaymentSwitch from './PaymentSwitch';
+import {
+  getProgramByCode,
+  getProgramByReference,
+} from '@/app/(main)/models/programs';
 
 type Props = {
   student: typeof students.$inferSelect;
@@ -33,7 +38,16 @@ export default function StudentView({ student }: Props) {
       <DetailsViewBody>
         <Stack>
           <PaymentSwitch student={student} />
-          <Divider my={'sm'} />
+          <Card withBorder>
+            <InfoItem
+              label='Program'
+              value={
+                getProgramByReference(student.reference)?.name ||
+                'Not Specified'
+              }
+              copyable
+            />
+          </Card>
           <div>
             <Title order={4} mb='xs' fw={100}>
               Personal Information
