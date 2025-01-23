@@ -28,6 +28,10 @@ const programs: Program[] = [
     name: 'Certificate in Innovation Travel and Tourism',
     code: 'CTM',
   },
+  {
+    name: 'Certificate in Innovation Travel and Tourism',
+    code: 'CITT',
+  },
 ];
 
 export function getProgramByReference(reference?: string | null) {

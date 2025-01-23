@@ -16,7 +16,7 @@ type Programs = {
 };
 
 const programs: Programs = {
-  TVET: ['CBIT', 'CPA', 'CAT', 'CGD', 'CMK', 'CTM'],
+  TVET: ['CBIT', 'CPA', 'CAT', 'CGD', 'CMK', 'CTM', 'CITT'],
 };
 
 export default function ReferenceNumberInput() {
