@@ -15,6 +15,16 @@ export default class StudentRepository extends BaseRepository<
       where: (student, { eq }) => eq(student.nationalId, nationalId),
     });
   }
+
+  async stats() {
+    const allStudents = await db.query.students.findMany();
+    const paidStudents = allStudents.filter((student) => student.paid);
+
+    return {
+      total: allStudents.length,
+      paid: paidStudents.length,
+    };
+  }
 }
 
 export const studentsRepository = new StudentRepository();

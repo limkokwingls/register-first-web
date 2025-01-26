@@ -32,3 +32,7 @@ export async function updateStudent(id: string, student: Student) {
 export async function deleteStudent(id: string) {
   return service.delete(id);
 }
+
+export async function getStudentStats() {
+  return service.stats();
+}

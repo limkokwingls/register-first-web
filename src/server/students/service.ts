@@ -42,6 +42,10 @@ class StudentService {
   async count() {
     return withAuth(async () => this.repository.count(), []);
   }
+
+  async stats() {
+    return withAuth(async () => this.repository.stats(), []);
+  }
 }
 
 export const studentsService = new StudentService();
