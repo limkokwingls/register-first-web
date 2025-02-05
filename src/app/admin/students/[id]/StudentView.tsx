@@ -1,5 +1,6 @@
 'use client';
 
+import { getProgramByReference } from '@/app/(main)/models/programs';
 import {
   DetailsView,
   DetailsViewBody,
@@ -10,7 +11,6 @@ import { formatDate } from '@/lib/utils';
 import {
   ActionIcon,
   Card,
-  Divider,
   Grid,
   Group,
   Paper,
@@ -22,10 +22,6 @@ import {
 import { notifications } from '@mantine/notifications';
 import { IconCopy } from '@tabler/icons-react';
 import PaymentSwitch from './PaymentSwitch';
-import {
-  getProgramByCode,
-  getProgramByReference,
-} from '@/app/(main)/models/programs';
 
 type Props = {
   student: typeof students.$inferSelect;

@@ -18,6 +18,7 @@ import { useRouter } from 'next/navigation';
 import React from 'react';
 import {
   Icon,
+  IconChartPie,
   IconChevronRight,
   IconLogout2,
   IconUser,
@@ -46,6 +47,11 @@ const navigation: NavItem[] = [
     label: 'Students',
     href: '/admin/students',
     icon: IconUsers,
+  },
+  {
+    label: 'Statistics',
+    href: '/admin/statistics',
+    icon: IconChartPie,
   },
 ];
 
