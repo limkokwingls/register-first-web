@@ -126,6 +126,7 @@ export const students = sqliteTable(
     id: text()
       .primaryKey()
       .$defaultFn(() => nanoid()),
+    stdNo: text(),
     nationalId: text().notNull(),
     reference: text(),
     name: text().notNull(),
